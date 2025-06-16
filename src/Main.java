@@ -1,16 +1,50 @@
-interface Greeting {
-    void greet();
+interface Calculator {
+    int compute(int a, int b);
 }
 
 public class Main {
     public static void main(String[] args) {
-        Greeting greeting = new Greeting() {                // Greeting 이게 anonymousClass
-            @Override                                       // 원래라면 위에 클래스에 상속에 오버라이딩까지 해야하지만
-            public void greet() {                           // 한번쓰고 말거여서 이렇게 한다.
-                System.out.println("Hello from the anonymous class!");
+        Calculator sum = new Calculator() {             // 인스턴스 생성
+            @Override
+            public int compute(int a, int b) {          // 그와 동시에 구현
+                return a + b;
             }
         };
-
-        greeting.greet();
+        Calculator sub = new Calculator() {
+            @Override
+            public int compute(int a, int b) {
+                return a - b;
+            }
+        };
+        Calculator mul = new Calculator() {
+            @Override
+            public int compute(int a, int b) {
+                return a * b;
+            }
+        };
+        Calculator nng = new Calculator() {
+            @Override
+            public int compute(int a, int b) {
+                return a / b;
+            }
+        };
+        Calculator mulmul = new Calculator() {
+            @Override
+            public int compute(int a, int b) {
+                return a * a * b * b;
+            }
+        };
+        Calculator connectNum = new Calculator() {
+            @Override
+            public int compute(int a, int b) {
+                return Integer.parseInt(""+ a + b);
+            }
+        };
+        System.out.println(sum.compute(3,4));
+        System.out.println(sub.compute(3,4));
+        System.out.println(mul.compute(3,4));
+        System.out.println(nng.compute(3,4));
+        System.out.println(mulmul.compute(3,4));
+        System.out.println(connectNum.compute(3,4));
     }
 }
