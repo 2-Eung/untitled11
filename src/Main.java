@@ -1,32 +1,28 @@
 public class Main {
-    interface OnClickListener {
-        void onClick();                                                 // innerClass의 click 에의해 오버라이딩 됨
-    }
+    private String data = "Outer data";
 
-    private OnClickListener listener;                                   // 생성자 로써 변수 listener를 생성한다.
-
-    public void setOnClickListener(OnClickListener listener) {          // 세터의 역할
-        this.listener = listener;
-    }
-    public void click() {               // 실제 클릭이 일어나면 작동        // 만약 listener 가 0 이 아니면
-        if(listener != null) {                                          // onClick(); 을 실행
-            listener.onClick();
+    class Inner {
+        void printData() {
+            System.out.println(data);
         }
     }
-    private class ClickHandler implements OnClickListener {             // InnerClass 외부로부터 감추기위해
-        @Override
-        public void onClick() {
-            System.out.println("Button was clicked!");
-        }
-    }
-    public void simulate() {
-        setOnClickListener(new ClickHandler());                         // 같은 클래스의 setOn~ 메소드를 불러오고 이 메소드는
-        click();                                                        // listener 의 변수를 매개변수로 가진다.
+
+    public Inner createInner() {                        // 반환타입이 Inner
+        return new Inner();                             // new ....
     }
 
     public static void main(String[] args) {
-        Main btn = new Main();
+        Main outer = new Main();
 
-        btn.simulate();
+        //Outer.this
+        Main.Inner inner = outer.createInner();
+
+        inner.printData();
+
+        outer = null;                                   // outer 메모리를 날려도
+        inner.printData();                              // 실행 됨
+
+        inner = null;
+//      inner.printData();                              // inner 메모리 날리면 실행 안됨
     }
 }
