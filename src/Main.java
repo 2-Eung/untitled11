@@ -1,27 +1,19 @@
-class Car {
-    String brand;
-    Engine engine;                          // innerClass 접근 가능
+class Outer {
+    String outerMessage = "Hello from Outer";
 
-    public Car(String brand) {
-        this.brand = brand;
-        this.engine = new Engine();         // Car 인스턴스를 생성하게되면 innerClass 의 인스턴스도 동시에 생성하고
-    }                                       // 이때 엔진을 끼워넣는다.
-
-    class Engine {
-        public void start() {
-            System.out.println("The engine of " + brand + " is starting.");
+    class Inner {                                   // private 를 넣으면 안된다 왜???
+        void showMessage() {
+            System.out.println(outerMessage);
         }
     }
-
-    public void startEngine() {         // 이거 할때마다 새 엔진으로 갈아끼운다 <-- 이해하기
-//      Engine engine = new Engine();   // 엔진이 시작할때마다 엔진을 생성한다
-        engine.start();
-    }
 }
+
 public class Main {
     public static void main(String[] args) {
-        Car car = new Car("빠른자동차");
+        Outer outer = new Outer();
 
-        car.startEngine();
+        Outer.Inner inner = outer.new Inner();      // inner 인스턴스는 반드시 outer 인스턴스를 통해 생성해야 한다????
+
+        inner.showMessage();
     }
 }
